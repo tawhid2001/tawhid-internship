@@ -4,9 +4,13 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./HotCollections.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // API call to fetch hot collections data on component mount
@@ -14,9 +18,14 @@ const HotCollections = () => {
       const collectionsData = await axios.get(
         "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections",
       );
+      // Update state with fetched data
       setCollections(collectionsData.data);
+
+      // Set loading to false after data is fetched
+      setLoading(false);
     };
 
+    // Invoke the data fetching function
     fetchData();
   }, []);
 
@@ -51,53 +60,23 @@ const HotCollections = () => {
     ],
   };
 
-  function NextArrow(props) {
-    const { className, onClick } = props;
-
+  function NextArrow({ onClick }) {
     return (
-      <div
-        className={className}
-        onClick={onClick}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "white",
-          color: "black",
-          borderRadius: "50%",
-          width: "50px",
-          height: "50px",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-          right: "-20px",
-          zIndex: 10,
-        }}
-      ></div>
+      <button className="custom-arrow custom-next" onClick={onClick}>
+        <FontAwesomeIcon icon={faAngleRight} />
+      </button>
     );
   }
 
-  function PrevArrow(props) {
-    const { className, onClick } = props;
-
+  function PrevArrow({ onClick }) {
     return (
-      <div
-        className={className}
-        onClick={onClick}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "white",
-          color: "black",
-          borderRadius: "50%",
-          width: "50px",
-          height: "50px",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-          left: "-20px",
-          zIndex: 10,
-        }}
-      ></div>
+      <button className="custom-arrow custom-prev" onClick={onClick}>
+        <FontAwesomeIcon icon={faAngleLeft} />
+      </button>
     );
   }
+
+  const skeletonCards = new Array(4).fill(0);
 
   return (
     <section id="section-collections" className="no-bottom">
@@ -110,37 +89,56 @@ const HotCollections = () => {
             </div>
           </div>
           <Slider {...settings}>
-            {collections.map((collection) => (
-              <div key={collection.id}>
-                <div className="nft_coll">
-                  <div className="nft_wrap">
-                    <Link to="/item-details">
-                      <img
-                        src={collection.nftImage}
-                        className="lazy img-fluid"
-                        alt=""
-                      />
-                    </Link>
+            {loading
+              ? skeletonCards.map((_, index) => (
+                  <div key={index}>
+                    <div className="nft_coll m-1">
+                      <div className="nft_wrap">
+                        <div className="skeleton-box skeleton-img"></div>
+                      </div>
+
+                      <div className="nft_coll_pp">
+                        <div className="skeleton-box skeleton-avatar"></div>
+                      </div>
+
+                      <div className="nft_coll_info">
+                        <div className="skeleton-box skeleton-title"></div>
+                        <div className="skeleton-box skeleton-code"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="nft_coll_pp">
-                    <Link to="/author">
-                      <img
-                        className="lazy pp-coll"
-                        src={collection.authorImage}
-                        alt=""
-                      />
-                    </Link>
-                    <i className="fa fa-check"></i>
+                ))
+              : collections.map((collection) => (
+                  <div key={collection.id}>
+                    <div className="nft_coll m-1">
+                      <div className="nft_wrap">
+                        <Link to="/item-details">
+                          <img
+                            src={collection.nftImage}
+                            className="lazy img-fluid"
+                            alt=""
+                          />
+                        </Link>
+                      </div>
+                      <div className="nft_coll_pp">
+                        <Link to="/author">
+                          <img
+                            className="lazy pp-coll"
+                            src={collection.authorImage}
+                            alt=""
+                          />
+                        </Link>
+                        <i className="fa fa-check"></i>
+                      </div>
+                      <div className="nft_coll_info">
+                        <Link to="/explore">
+                          <h4>{collection.title}</h4>
+                        </Link>
+                        <span>ERC-{collection.code}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="nft_coll_info">
-                    <Link to="/explore">
-                      <h4>{collection.title}</h4>
-                    </Link>
-                    <span>ERC-{collection.code}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))}
           </Slider>
         </div>
       </div>

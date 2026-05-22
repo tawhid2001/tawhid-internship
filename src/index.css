@@ -11,13 +11,3 @@
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
 
-.slick-slide > div {
-  padding: 0 5px;
-}
-
-.slick-prev:before,
-.slick-next:before {
-  color: black !important;
-  font-size: 20px;
-  opacity: 1;
-}
