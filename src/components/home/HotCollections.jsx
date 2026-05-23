@@ -4,7 +4,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./HotCollections.css";
+import "./CustomSliderStyles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -33,7 +33,9 @@ const HotCollections = () => {
     dots: false,
     arrows: true,
     infinite: true,
-    speed: 500,
+    speed: 150,
+    cssEase: "ease-in-out",
+    waitForAnimate: true,
     slidesToShow: 4,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
