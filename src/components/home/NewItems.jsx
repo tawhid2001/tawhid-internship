@@ -9,6 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import "./CustomSliderStyles.css";
 import Skeleton from "../UI/Skeleton";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+AOS.init();
 
 const NewItems = () => {
   let [newItems, setNewItems] = useState([]);
@@ -83,7 +87,16 @@ const NewItems = () => {
   const skeletonCards = new Array(4).fill(0);
 
   return (
-    <section id="section-items" className="no-bottom">
+    <section
+      data-aos="fade-up"
+      data-aos-delay="100"
+      data-aos-duration="600"
+      data-aos-easing="ease"
+      data-aos-once="true"
+
+      id="section-items"
+      className="no-bottom"
+    >
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

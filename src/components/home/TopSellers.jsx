@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./TopSellers.css";
 import Skeleton from "../UI/Skeleton";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+AOS.init();
 
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
@@ -30,7 +34,15 @@ const TopSellers = () => {
   const skeletonSellers = new Array(12).fill(0);
 
   return (
-    <section id="section-popular" className="pb-5">
+    <section
+      data-aos="fade-in"
+      data-aos-delay="100"
+      data-aos-duration="600"
+      data-aos-easing="ease"
+      data-aos-once="true"
+      id="section-popular"
+      className="pb-5"
+    >
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
