@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EthImage from "../images/ethereum.svg";
 import { Link } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
-import nftImage from "../images/nftImage.jpg";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../components/UI/Skeleton";
@@ -23,7 +21,7 @@ const ItemDetails = () => {
     };
 
     fetchItemDetails();
-  }, []);
+  }, [nftId]);
 
   return (
     <div id="wrapper">

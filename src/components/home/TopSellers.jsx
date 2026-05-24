@@ -31,7 +31,6 @@ const TopSellers = () => {
     fetchSellers();
   }, []);
 
-  const skeletonSellers = new Array(12).fill(0);
 
   return (
     <section
