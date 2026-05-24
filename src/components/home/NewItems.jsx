@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import "./CustomSliderStyles.css";
+import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
   let [newItems, setNewItems] = useState([]);
@@ -95,21 +96,8 @@ const NewItems = () => {
           <Slider {...settings}>
             {loading
               ? skeletonCards.map((_, index) => (
-                  <div key={index}>
-                    <div className="nft_coll m-1">
-                      <div className="nft_wrap">
-                        <div className="skeleton-box skeleton-img"></div>
-                      </div>
-
-                      <div className="nft_coll_pp">
-                        <div className="skeleton-box skeleton-avatar"></div>
-                      </div>
-
-                      <div className="nft_coll_info">
-                        <div className="skeleton-box skeleton-title"></div>
-                        <div className="skeleton-box skeleton-code"></div>
-                      </div>
-                    </div>
+                  <div className="p-2" key={index}>
+                    <Skeleton width="100%" height="300px" borderRadius="10px" />
                   </div>
                 ))
               : newItems.map((item) => (

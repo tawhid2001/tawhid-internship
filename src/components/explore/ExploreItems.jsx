@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Timer from "../home/Timer";
+import Skeleton from "../UI/Skeleton";
 
 const ExploreItems = () => {
   const [exploreItems, setExploreItems] = useState([]);
@@ -27,10 +28,8 @@ const ExploreItems = () => {
     fetchExploreItems();
   }, []);
 
-
   useEffect(() => {
     // calling API to fetch sorted data based on filterValue
-
 
     const fetchSortedItems = async () => {
       try {
@@ -54,7 +53,11 @@ const ExploreItems = () => {
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="" onChange={(e) => setFilterValue(e.target.value)}>
+        <select
+          id="filter-items"
+          defaultValue=""
+          onChange={(e) => setFilterValue(e.target.value)}
+        >
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
@@ -64,11 +67,8 @@ const ExploreItems = () => {
 
       {loading
         ? skeletonCards.map((_, index) => (
-            <div
-              className="col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-4"
-              key={index}
-            >
-              <div className="skeleton-simple-card"></div>
+            <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4" key={index}>
+              <Skeleton width="100%" height="300px" borderRadius="10px" />
             </div>
           ))
         : exploreItems.slice(0, visibleItems).map((item) => (

@@ -7,19 +7,19 @@ import axios from "axios";
 import Skeleton from "../components/UI/Skeleton";
 
 const Author = () => {
-  const { id } = useParams();
+  const { authorId } = useParams();
 
   const [authorData, setAuthorData] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchAuthorData = async () => {
       try {
         const response = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`,
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`,
         );
-        console.log("Fetched author data:", response.data);
         setAuthorData(response.data);
         setLoading(false);
       } catch (error) {
@@ -29,7 +29,7 @@ const Author = () => {
     };
 
     fetchAuthorData();
-  }, [id]);
+  }, [authorId]);
 
   const skeletonItems = new Array(8).fill(0);
 

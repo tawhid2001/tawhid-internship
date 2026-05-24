@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
 import "./TopSellers.css";
+import Skeleton from "../UI/Skeleton";
 
 const TopSellers = () => {
   const [topSellers, setTopSellers] = useState([]);
@@ -41,29 +41,19 @@ const TopSellers = () => {
           </div>
           <div className="col-md-12">
             <ol className="author_list">
-              {loading
-                ? skeletonSellers.map((_, index) => (
-                    <li key={index}>
-                      <div className="top-seller-skeleton">
-                        <div className="top-seller-skeleton__item">
-                          <div className="top-seller-skeleton__avatar-wrapper">
-                            <div className="top-seller-skeleton__avatar">
-                              <div className="top-seller-skeleton__check">
-                                <i className="fa fa-check"></i>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="top-seller-skeleton__info">
-                            <div className="top-seller-skeleton__title"></div>
-                            <div className="top-seller-skeleton__price"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))
-                : topSellers.map((topSeller) => (
-                    <li key={topSeller.id}>
-                      <div className="author_list_pp">
+              {topSellers.map((topSeller) => (
+                <li key={topSeller.id}>
+                  <div className="author_list_pp">
+                    {loading ? (
+                      <>
+                        <Skeleton
+                          width="50px"
+                          height="50px"
+                          borderRadius="50%"
+                        />
+                      </>
+                    ) : (
+                      <>
                         <Link to={`/author/${topSeller.authorId}`}>
                           <img
                             className="lazy pp-author"
@@ -72,13 +62,28 @@ const TopSellers = () => {
                           />
                           <i className="fa fa-check"></i>
                         </Link>
+                      </>
+                    )}
+                  </div>
+                  {loading ? (
+                    <>
+                      <div className="author_list_info">
+                        <div className="d-flex flex-column align-items-start gap-2">
+                          <Skeleton width="100px" height="20px" />
+                          <Skeleton width="60px" height="20px" />
+                        </div>
                       </div>
+                    </>
+                  ) : (
+                    <>
                       <div className="author_list_info">
                         <Link to="/author">{topSeller.authorName}</Link>
                         <span>{topSeller.price} ETH</span>
                       </div>
-                    </li>
-                  ))}
+                    </>
+                  )}
+                </li>
+              ))}
             </ol>
           </div>
         </div>
