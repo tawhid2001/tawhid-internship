@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./CustomSliderStyles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import Skeleton from "../UI/Skeleton";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
@@ -91,38 +92,41 @@ const HotCollections = () => {
             </div>
           </div>
           <Slider {...settings}>
-            {loading
-              ? skeletonCards.map((_, index) => (
-                  <div key={index}>
-                    <div className="nft_coll m-1">
-                      <div className="nft_wrap">
-                        <div className="skeleton-box skeleton-img"></div>
-                      </div>
-
-                      <div className="nft_coll_pp">
-                        <div className="skeleton-box skeleton-avatar"></div>
-                      </div>
-
-                      <div className="nft_coll_info">
-                        <div className="skeleton-box skeleton-title"></div>
-                        <div className="skeleton-box skeleton-code"></div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              : collections.map((collection) => (
-                  <div key={collection.id}>
-                    <div className="nft_coll m-1">
-                      <div className="nft_wrap">
-                        <Link to="/item-details">
+            {collections.map((collection) => (
+              <div key={collection.id}>
+                <div className="nft_coll m-1">
+                  <div className="nft_wrap">
+                    {loading ? (
+                      <>
+                        <Skeleton
+                          width="100%"
+                          height="100px"
+                          borderRadius="10px"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Link to={`/item-details/${collection.nftId}`}>
                           <img
                             src={collection.nftImage}
                             className="lazy img-fluid"
                             alt=""
                           />
                         </Link>
-                      </div>
-                      <div className="nft_coll_pp">
+                      </>
+                    )}
+                  </div>
+                  <div className="nft_coll_pp">
+                    {loading ? (
+                      <>
+                        <Skeleton
+                          width="40px"
+                          height="40px"
+                          borderRadius="50%"
+                        />
+                      </>
+                    ) : (
+                      <>
                         <Link to={`/author/${collection.authorId}`}>
                           <img
                             className="lazy pp-coll"
@@ -131,16 +135,30 @@ const HotCollections = () => {
                           />
                         </Link>
                         <i className="fa fa-check"></i>
-                      </div>
-                      <div className="nft_coll_info">
+                      </>
+                    )}
+                  </div>
+                  <div className="nft_coll_info">
+                    {loading ? (
+                      <>
+                        <div className= "d-flex flex-column align-items-center gap-2">
+                          <Skeleton width="50%" height="20px" />
+                        {" "}
+                        <Skeleton width="25%" height="20px" />
+                        </div>
+                      </>
+                    ) : (
+                      <>
                         <Link to="/explore">
                           <h4>{collection.title}</h4>
                         </Link>
                         <span>ERC-{collection.code}</span>
-                      </div>
-                    </div>
+                      </>
+                    )}
                   </div>
-                ))}
+                </div>
+              </div>
+            ))}
           </Slider>
         </div>
       </div>
