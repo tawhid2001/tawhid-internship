@@ -14197,6 +14197,30 @@ a.read_more i {
   display: flex;
 }
 
+.profile_avatar_wrapper {
+  position: relative;
+  width: fit-content;
+}
+
+.profile_avatar_wrapper .fa-check {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+
+  background: #8364e2;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 3px solid white;
+}
+
 .d_coll .profile_avatar {
   display: block;
   text-align: center;
