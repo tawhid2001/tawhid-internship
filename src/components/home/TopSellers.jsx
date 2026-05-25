@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./TopSellers.css";
 import Skeleton from "../UI/Skeleton";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -31,6 +30,7 @@ const TopSellers = () => {
     fetchSellers();
   }, []);
 
+  const skeletonSellers = new Array(12).fill(0);
 
   return (
     <section
@@ -52,49 +52,46 @@ const TopSellers = () => {
           </div>
           <div className="col-md-12">
             <ol className="author_list">
-              {topSellers.map((topSeller) => (
-                <li key={topSeller.id}>
-                  <div className="author_list_pp">
-                    {loading ? (
-                      <>
+              {loading
+                ? skeletonSellers.map((_, index) => (
+                    <li key={index}>
+                      <div className="author_list_pp">
                         <Skeleton
                           width="50px"
                           height="50px"
                           borderRadius="50%"
                         />
-                      </>
-                    ) : (
-                      <>
-                        <Link to={`/author/${topSeller.authorId}`}>
-                          <img
-                            className="lazy pp-author"
-                            src={topSeller.authorImage}
-                            alt=""
-                          />
-                          <i className="fa fa-check"></i>
-                        </Link>
-                      </>
-                    )}
-                  </div>
-                  {loading ? (
-                    <>
+                      </div>
+
                       <div className="author_list_info">
                         <div className="d-flex flex-column align-items-start gap-2">
                           <Skeleton width="100px" height="20px" />
                           <Skeleton width="60px" height="20px" />
                         </div>
                       </div>
-                    </>
-                  ) : (
-                    <>
+                    </li>
+                  ))
+                : topSellers.map((topSeller) => (
+                    <li key={topSeller.id}>
+                      <div className="author_list_pp">
+                        <Link to={`/author/${topSeller.authorId}`}>
+                          <img
+                            className="lazy pp-author"
+                            src={topSeller.authorImage}
+                            alt={topSeller.authorName}
+                          />
+                          <i className="fa fa-check"></i>
+                        </Link>
+                      </div>
+
                       <div className="author_list_info">
-                        <Link to="/author">{topSeller.authorName}</Link>
+                        <Link to={`/author/${topSeller.authorId}`}>
+                          {topSeller.authorName}
+                        </Link>
                         <span>{topSeller.price} ETH</span>
                       </div>
-                    </>
-                  )}
-                </li>
-              ))}
+                    </li>
+                  ))}
             </ol>
           </div>
         </div>
